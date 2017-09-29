@@ -10,7 +10,8 @@ def lmode(path):
 	filename=path.split('/')[-1].split('.')[0]
 	if len(filename)<4:
 		return
-	global d 
+	global d
+	filename=path 
 	d[filename]=[]
 	ref_l=0
 	ref_o,lm=0,{}
@@ -120,23 +121,31 @@ for i in d:
 		continue
 	else:
 		num+=1
-	sheet.write(num,0,i)
+	sheet.write(num,0,i.split('/')[-1].split('.')[0])
+	sh_ref1,sh_ref2,sh_ref=0,0,0
 	for j in d[i]:
+		
 		if 'wo' in j:
 			sheet.write(num,6,j[1])
 		elif 'path' in j:
 			sheet.write(num,7,j[1])
 		else :
 			a,b=j[1].split('-')
-			if a in metals or b in metals:
+			if (a in metals or b in metals) and sh_ref1==0:
+				sh_ref1+=1
 				sheet.write(num,2,j[2])
 				sheet.write(num,4,j[3])
 				sheet.write(num,5,j[4])
-			else:
+			elif sh_ref2==0:
+				sh_ref2+=1
 				sheet.write(num,1,j[2])
 				sheet.write(num,3,j[3])
-	
-	
+		if 'bond,q_n,ka,wa' in j:
+			sh_ref+=1
+		if sh_ref>2 and 'bond,q_n,ka,wa' in j:
+                        print j
+                        sheet.write(num,7+sh_ref-2,','.join(map(str,j)))
+
 
 wb.save('lmode.xls')
 
