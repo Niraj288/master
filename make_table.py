@@ -2,7 +2,7 @@ import sys
 import os
 import xlwt
 import xlrd
-import numpy
+
 d={} 
 def lmode(path):
 	print path
