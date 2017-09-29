@@ -1,3 +1,3 @@
 # master
-Comming soon !
+Coming soon !
 
