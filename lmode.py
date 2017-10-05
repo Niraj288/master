@@ -21,22 +21,3 @@ def func(path):
 path=raw_input("Enter path : ")
 module.search_deep(path,func,['.alm'])
 
-
-
-
- $Contrl QCProg="gaussian"
-   iprint=0
-   isymm = 1
-   iacs = 1
-   nstep = -20
- $end
-
-
-
-$QCData
-   FCHK="I2_NN_Pt.fchk"
- $End
-
- $LocMod $End
-15 16 0 0   : I-I
-15 13 0 0   : I-Pt
