@@ -5,9 +5,7 @@ def search_deep(n_path,func,args=[]):
 			if os.path.isdir(n_path+'/'+i):
 				search_deep(n_path+'/'+i,func,args=[])
 			else:
-				for j in args:
-					if j in i:
-						func(n_path+'/'+i)
+				func(n_path+'/'+i)
 	except OSError:
 		func(n_path+'/'+i)
 		#raise Exception('Not a directory ')
