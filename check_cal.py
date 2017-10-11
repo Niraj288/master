@@ -4,7 +4,6 @@ import module
 def func(path):
         if 'g16.out' not in path:
                 return
-        print path
         ref,ref_f=0,1
         file=open(path,'r')
         file_=file.readlines()
