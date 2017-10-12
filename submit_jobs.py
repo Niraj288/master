@@ -1,3 +1,4 @@
+#!/usr/bin/python
 #Automation
 import os
 import threading
@@ -23,7 +24,7 @@ def gauss_claculations():
 	elif raw_input('Send all .g16 or .inp files in the directory ?? (y/n) : ')=='y':
 		refe=1
 	for i in os.listdir(os.getcwd()):
-	        if '.g16' in i or '.inp' in i:
+	        if '.g16'==i[-4:] or '.inp'==i[-4:]:
 	        	if refe==0:
 	        		if raw_input('Submit job for '+i+' ? (y/n) : ')=='y':
 		               		 filename=i.strip().split('.')[0]
@@ -69,7 +70,7 @@ def organize():
 				os.rename(file,f+'/'+file)
 			except OSError:
 				pass
-if '-h' or '-help' in sys.argv:
+if '-h' in sys.argv or '-help' in sys.argv :
 	print '-h : help'
 	print '-help : help'
 	print '-m : mode for grun'
