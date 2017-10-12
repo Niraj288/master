@@ -24,7 +24,7 @@ def gauss_claculations():
 	elif raw_input('Send all .g16 or .inp files in the directory ?? (y/n) : ')=='y':
 		refe=1
 	for i in os.listdir(os.getcwd()):
-	        if '.g16' in i or '.inp' in i:
+	        if '.g16'==i[-4:] or '.inp'==i[-4:]:
 	        	if refe==0:
 	        		if raw_input('Submit job for '+i+' ? (y/n) : ')=='y':
 		               		 filename=i.strip().split('.')[0]
