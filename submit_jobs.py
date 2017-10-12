@@ -70,7 +70,7 @@ def organize():
 				os.rename(file,f+'/'+file)
 			except OSError:
 				pass
-if '-h' or '-help' in sys.argv:
+if '-h' in sys.argv or '-help' in sys.argv :
 	print '-h : help'
 	print '-help : help'
 	print '-m : mode for grun'
