@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import os
 d={}
 for file in os.listdir(os.getcwd()):

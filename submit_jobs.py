@@ -1,3 +1,4 @@
+#!/usr/bin/python
 #Automation
 import os
 import threading
