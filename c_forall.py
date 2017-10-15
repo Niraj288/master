@@ -18,8 +18,12 @@ def func(path):
 			sys.stdout.flush()
 
 path=raw_input("Enter path : ")
-lis='['+raw_input("Enter keyword for filename : ")+']'
+lis=raw_input("Enter keyword for filename : ")
+lis=lis.replace(',','","')
+lis=eval('["'+lis+'"]')
 print '-f is for filename'
 print '-p is for path'
-args=eval('['+raw_input("Enter comma separated Commands : ")+']')
-module.search_deep(path,func,eval(lis))
+args=raw_input("Enter comma separated Commands : ")
+args=args.replace(',','","')
+args=eval('["'+args+'"]')
+module.search_deep(path,func,lis)
