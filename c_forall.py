@@ -5,7 +5,7 @@ import sys
 
 def func(path):
 	global args
-	filename=path.strip().split('/')[-1].split('.')[0]
+	filename=path.replace('/','_')[1:]
 	for arg in args:
 		if '-p' in arg:
 			s=arg.replace('-f',filename)
@@ -27,3 +27,4 @@ args=raw_input("Enter comma separated Commands : ")
 args=args.replace(',','","')
 args=eval('["'+args+'"]')
 module.search_deep(path,func,lis)
+
