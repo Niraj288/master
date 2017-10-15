@@ -10,7 +10,8 @@ def func(path):
 
 
 path=raw_input("Enter path : ")
-args='['+raw_input("Enter arguments ('.g16','.g09', ...) : ")+']'
+args=raw_input("Enter arguments ('.g16','.g09', ...) : ")
+args='["'+args.replace(',','","')+'"]'
 dire=path+'/'+raw_input("Enter directory name : ")+'/'
 os.chdir(path)
 os.system("mkdir "+dire)
