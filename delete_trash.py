@@ -9,7 +9,7 @@ def search_deep(n_path):
 		global li
 		#print n_path
                 for i in os.listdir(n_path):
-                        if os.path.isdir(n_path+'/'+i) and '.g16_' in i:
+                        if os.path.isdir(n_path+'/'+i) and ('.g16_' in i or '.g09_' in i):
 				li.append(n_path+'/'+i)
                 	search_deep(n_path+'/'+i)
 	except OSError:
