@@ -1,7 +1,8 @@
+#!/usr/bin/python
 import sys
 import os
 import xlwt
-import xlrd
+#import xlrd
 
 d={} 
 def lmode(path):
