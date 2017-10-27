@@ -1,15 +1,12 @@
 
 import os
 import xlwt
-#import xlrd
 
 d={} 
 def lmode(path):
 	print path
 	file = open(path,'r')
 	filename=path.split('/')[-1].split('.')[0]
-	if len(filename)<4:
-		return
 	global d
 	filename=path 
 	d[filename]=[]
@@ -32,45 +29,8 @@ def lmode(path):
 			d[filename].append(['bond,q_n,ka,wa',bond,float(q_n),float(ka),float(wa)])
 		if ref_l==4:
 			ref_l=0
-		if 'Local Mode:' in line:
-			ref_o=1
-		elif len(line.strip().split())<2:
-			ref_o=0
-		elif ref_o==1:
-			lis=line.strip().split()
-			val=float(lis[3])
-			if val>5:
-				lm[lis[0]]=[0,0,val,'0'] # active,index, val, freq
-	ref=0
-	#print 'wtf'
-	file = open(path,'r')
-	for line in file:
-		#print 1234467
-		if 'Results of vibrations:' in line:
-			ref_o=1
-		elif ref_o==1:
-			lis=line.strip().split()
-			for i in lm:
-				if lm[i][0]==0:
-					for j in range (len(lis)):
-						if i==lis[j]:
-							lm[i][0]=1
-							lm[i][1]=j
-			if 'Frequencies' in line:
-				li=line.strip().split()
-				for i in lm:
-					if lm[i][0]==1:
-						lm[i][3]=li[lm[i][1]+1]
-						lm[i][0]=0
-						ref+=1
-		elif len(lm)==ref:
-			break
-	st=''
-	for i in lm:
-		print i,lm[i]
-		st+=lm[i][3]+'('+i+';'+str(lm[i][2])+')'+' '
-	print st
-	d[filename].append(['wo',st])
+		
+	d[filename].append(['wo',''])
 	d[filename].append(['path',path])
 
 
@@ -97,7 +57,7 @@ def search_deep(n_path):
 		#raise Exception('Not a directory ')
 search_deep(path)
 
-#print d
+print d
 if k_ref==0:
 	print "\n:( no files found in the specified path :'( "
 
