@@ -24,8 +24,13 @@ def lmode(path):
 		if '------------------' in line and ref_l>0:
 			ref_l+=1
 		elif ref_l==3:
-			print line.strip().split()[5:8]
-			bond,q_n,ka,wa=line.strip().split()[5:8]+[line.strip().split()[9]]
+			index=5
+			try:
+				float(line.strip().split()[6])
+			except ValueError:
+				index=6
+			print line.strip().split()[index:index+3]
+			bond,q_n,ka,wa=line.strip().split()[index:index+3]+[line.strip().split()[9]]
 			d[filename].append(['bond,q_n,ka,wa',bond,float(q_n),float(ka),float(wa)])
 		if ref_l==4:
 			ref_l=0
