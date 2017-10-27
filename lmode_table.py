@@ -1,12 +1,11 @@
-#!/usr/bin/python
-import sys
+
 import os
 import xlwt
 #import xlrd
 
 d={} 
 def lmode(path):
-	#print path
+	print path
 	file = open(path,'r')
 	filename=path.split('/')[-1].split('.')[0]
 	if len(filename)<4:
@@ -79,7 +78,7 @@ def lmode(path):
 
 #lmode(file,path)
 
-path='.' or raw_input('Enter path :')
+path=raw_input('Enter path :')
 
 k_ref=0
 def search_deep(n_path):
@@ -98,73 +97,39 @@ def search_deep(n_path):
 		#raise Exception('Not a directory ')
 search_deep(path)
 
-print d
+#print d
 if k_ref==0:
 	print "\n:( no files found in the specified path :'( "
+
 
 wb=xlwt.Workbook() 
 
 sheet = wb.add_sheet(raw_input('Enter output sheet name : ') or path.split('/')[-1][:-4])
 
 sheet.write(0,0,'Name')
-sheet.write(0,1,'r\n(XY)')
-sheet.write(0,2,'r\n(XA)')
-sheet.write(0,3,'ka\n(XY)')
-sheet.write(0,4,'ka\n(XA)')
-sheet.write(0,5,'wa\n(XA)')
-sheet.write(0,6,'wo\n(XY)')
-sheet.write(0,7,'Comments')
+sheet.write(0,1,'Bond')
+sheet.write(0,2,'Bond length')
+sheet.write(0,3,'Ka')
+sheet.write(0,4,'wa')
+sheet.write(0,5,'Comments')
 
 num=0
 for i in d:
-	metals=['Pd','Pt','Ni','Co','Ir','Rh']
 	if len(d[i])==0:
 		continue
 	else:
 		num+=1
 	sheet.write(num,0,i.split('/')[-1].split('.')[0])
-	sh_ref1,sh_ref2,sh_ref=0,0,0
+	c=num
 	for j in d[i]:
-		
 		if 'wo' in j:
-			sheet.write(num,6,j[1])
+			continue
 		elif 'path' in j:
-			sheet.write(num,7,j[1])
-		else :
-			a,b=j[1].split('-')
-			if (a in metals or b in metals) and sh_ref1==0:
-				sh_ref1+=1
-				sheet.write(num,2,j[2])
-				sheet.write(num,4,j[3])
-				sheet.write(num,5,j[4])
-			elif sh_ref2==0:
-				sh_ref2+=1
-				sheet.write(num,1,j[2])
-				sheet.write(num,3,j[3])
-		if 'bond,q_n,ka,wa' in j:
-			sh_ref+=1
-		if sh_ref>2 and 'bond,q_n,ka,wa' in j:
-                        print j
-                        sheet.write(num,7+sh_ref-2,','.join(map(str,j)))
-
-
+			sheet.write(c,5,j[1])
+		else:
+			sheet.write(num,1,j[1])
+			sheet.write(num,2,j[2])
+			sheet.write(num,3,j[3])
+			sheet.write(num,4,j[4])
+			num+=1
 wb.save('lmode.xls')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

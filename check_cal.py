@@ -1,16 +1,17 @@
 #!/usr/bin/python
 import os
 import module
+import sys
 
 def func(path):
-        if 'g16.out' not in path:
-                return
+       
         ref,ref_f=0,1
         file=open(path,'r')
         file_=file.readlines()
         file.close()
-        if 'Gaussian' not in file_[0]:
+        if 'Gaussian' not in ''.join(file_[0:5]):
                 return
+
         for line in file_:
                 if 'Frequencies' in line:
                         k=line.strip().split()
@@ -27,7 +28,12 @@ def func(path):
                 print 'More than 1 Imaginiary frequencies in '+path
         if 'Normal termination of Gaussian' not in file_[-1]:
                 print 'Error termination in '+path
-
-
-path=raw_input("Enter path : ")
+p=''
+if len(sys.argv)>1:
+	p=sys.argv[1]
+path=p or raw_input("Enter path : ")
 module.search_deep(path,func,['g16.out','g09.out'])
+
+
+
+

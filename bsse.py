@@ -9,10 +9,10 @@ def func(path):
 		return
 	name=path.replace('/','_')
 	filename=path.split('/')[-1].split('.')[0]
-	m=filename.split('_')[0]
-	mf=open('monomers'+'/'+m+'.txt')
+	m,m_=filename.split('_')
+	mg=open('monomers'+'/'+m+'.txt')
 	g=''
-	for line in mf:
+	for line in mg:
 		if 'SCF Done' in line:
 			g=float(line.strip().split()[4])
 
@@ -23,11 +23,25 @@ def func(path):
 			li.append(line.strip().split()[4])
 	li=map(float,li)
 
-	print li	
-	sheet.write(ref,6,g)
+	#print li	
+	f=''
+	mf=open('monomers/'+m_+'.txt')
+        for line in mf:
+                if 'SCF Done' in line:
+                        f=float(line.strip().split()[4])
+	a,b,c,d,e=li
+	Eint=a-(b+c)
+	ErelaxA=d-g
+	ErelaxB=e-f
+	ErelaxT=ErelaxA+ErelaxB
+	deltaE=Eint+ErelaxT
+	print deltaE
 	sheet.write(ref,0,name)
-	for i in range (5):
-		sheet.write(ref,i+1,li[i])
+	sheet.write(ref,1,ErelaxA)
+	sheet.write(ref,2,ErelaxB)
+	sheet.write(ref,3,ErelaxT)
+	sheet.write(ref,4,Eint)
+	sheet.write(ref,5,deltaE)
 	ref+=1
 
 path=raw_input("Enter path : ")
@@ -36,12 +50,11 @@ wb=xlwt.Workbook()
 sheet = wb.add_sheet(raw_input('Enter Sheet name : ') or 'pincer complexes')
 ref=1
 sheet.write(0,0,'Name')
-sheet.write(0,1,'a')
-sheet.write(0,2,'b')
-sheet.write(0,3,'c')
-sheet.write(0,4,'d')
-sheet.write(0,5,'e')
-sheet.write(0,6,'g')
+sheet.write(0,1,'Erelax_A')
+sheet.write(0,2,'Erelax_B')
+sheet.write(0,3,'Erelax_T')
+sheet.write(0,4,'Eint')
+sheet.write(0,5,'deltaE')
 module.search_deep(path,func,['.txt'])
 
 wb.save('bsse.xls')
