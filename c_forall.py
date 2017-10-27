@@ -5,9 +5,9 @@ import sys
 
 def func(path):
 	global args
-	filename=path.replace('/','_')[1:]
+	filename=path.split('/')[-1].split('.')[0]
 	for arg in args:
-		if '-p' in arg:
+		if '-p' in arg or '-f' in arg:
 			s=arg.replace('-f',filename)
 			s=s.replace('-p',path)
 			print 'Performing :',s,'...'
