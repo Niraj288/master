@@ -1,11 +1,5 @@
 #!/usr/bin/python
 import os
-try:
-	import pyPdf
-except ImportError:
-	print 'let me install the pdf reader for ya..'
-	os.system('pip install pyPdf')
-	import pyPdf
 path=raw_input('Enter path :')
 s=raw_input('What do you want to search :')
 d_ref=raw_input('Files/Directories u want to ignore :')
@@ -39,11 +33,12 @@ def prin(lis,jk,path):
 
 def search(i,n_path):
 	#for i in os.listdir(path):
-	#print n_path,'search'
+	print i,n_path,'search'
 	try:
 		os.chdir(n_path)
 		if i[-4:]=='.pdf':
-			getPDFContent(n_path+'/'+i,i)
+			pass
+			#getPDFContent(n_path+'/'+i,i)
 		else:
 			if i in d_ref:
 				pass
@@ -73,7 +68,8 @@ def search_deep(n_path):
 				elif len(e_ref)==0:
 					search(i,n_path)
 	except OSError:
-		raise Exception('Not a directory ')
+		search(n_path,'/'.join(os.getcwd().split('/')[:-1]))
+		#raise Exception('Not a directory ')
 search_deep(n_path)
 
 if k_ref==0:
