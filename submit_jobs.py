@@ -3,27 +3,54 @@
 import os
 import threading
 import multiprocessing
-import time
+import datetime
 import sys
+import time
 directories={}
+referance=0
+mod=''
+def schedule(st):
+	global mod
+	mod=raw_input('Enter mode : ')
+        h,m,s=map(int,st.split(':'))
+        now = datetime.datetime.now()
+        today = now.replace(hour=h, minute=m, second=s, microsecond=0)
+        while now<today:
+                time.sleep(3)
+		now = datetime.datetime.now()
+	su()
+def su():
+	global referance
+	print 'submitting job at '+str(datetime.datetime.now())
+	referance=1 
+        gauss_claculations(os.listdir(os.getcwd()))
 
 def threa(command):
         os.system(command)
 
-def gauss_claculations():
-	global directories
+def gauss_claculations(lis_paths):
+	global directories,referance,mod
 	path,filename='',''
-	if '-m' in sys.argv:
-		mode=sys.argv[2]
+	if referance==1:
+		mode=mod
 	else:
-		mode=raw_input("Enter mode : ")
+		if '-m' in sys.argv:
+			ind=sys.argv.index('-m')
+			mode=sys.argv[ind+1]
+		else:
+			mode=raw_input("Enter mode : ")
 	processes=[]
 	refe=0
-	if '-all' in sys.argv:
+	if '-all' in sys.argv or referance==1:
 		refe=1
 	elif raw_input('Send all .g16 or .inp files in the directory ?? (y/n) : ')=='y':
 		refe=1
-	for i in os.listdir(os.getcwd()):
+	if len(lis_paths)>0:
+		refe=1
+		paths=lis_paths
+	else:
+		paths=os.listdir(os.getcwd()) 
+	for i in paths:
 	        if '.g16'==i[-4:] or '.inp'==i[-4:]:
 	        	if refe==0:
 	        		if raw_input('Submit job for '+i+' ? (y/n) : ')=='y':
@@ -76,7 +103,11 @@ if '-h' in sys.argv or '-help' in sys.argv :
 	print '-m : mode for grun'
 	print '-all : for running all .g16 or.inp in folder'
 else: 
-	gauss_claculations()
+	if '-s' in sys.argv:
+		schedule(raw_input('Enter time (hh:mm:ss) : '))
+	else:
+		gauss_claculations([])
+
 #time.sleep(5)
 #organize()
 
