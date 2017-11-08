@@ -4,7 +4,7 @@ import module
 
 def func(path):
 	global dire
-	if path==dire:
+	if path[:len(dire)]==dire:
 		return 
 	os.system("cp "+path+' '+dire)
 
