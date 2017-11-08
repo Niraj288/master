@@ -11,7 +11,7 @@ referance=0
 mod=''
 def schedule(st):
 	global mod
-	mod=raw_input('Enter mode : ')
+	mod=sys.argv[sys.argv.index('-m')+1]
         h,m,s=map(int,st.split(':'))
         now = datetime.datetime.now()
         today = now.replace(hour=h, minute=m, second=s, microsecond=0)
@@ -104,7 +104,8 @@ if '-h' in sys.argv or '-help' in sys.argv :
 	print '-all : for running all .g16 or.inp in folder'
 else: 
 	if '-s' in sys.argv:
-		schedule(raw_input('Enter time (hh:mm:ss) : '))
+		st=sys.argv[sys.argv.index('-t')+1]
+		schedule(st)
 	else:
 		gauss_claculations([])
 
