@@ -18,7 +18,6 @@ def func(path):
                         d[(n,'comment')]=path
 			ref=1
                 if ref==1:
-                        #print line
                         if 'Rho' in line.strip().split():
                                 d[(n,'rho')]=line.strip().split()[2]
                         if 'DelSqRho' in line:
@@ -77,8 +76,9 @@ for i in d:
                 max_d=a
 print max_d
 i_ref=1
+print d
 for i in range (max_d+1):
-        if check(d[(index-1,'bn')]):
+        if 1 or check(d[(index-1,'bn')]):
 		d[(index-1,'bn')]='-'.join(d[(index-1,'bn')])
                 sheet.write(i_ref,0,d[(index-1,'bn')])
                 sheet.write(i_ref,1,d[(index-1,'rho')])
