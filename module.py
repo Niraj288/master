@@ -99,3 +99,6 @@ def make_xyz(path):
     g.close()
     return 1
 
+if __name__ == "__main__":
+        make_xyz(sys.argv[1])
+
