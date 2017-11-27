@@ -1,4 +1,5 @@
 import os
+import subprocess
 def search_deep(n_path,func,args=[],ref=1):
         if 'Trash' in n_path:
 		return
@@ -56,19 +57,30 @@ def make_fchk(path):
         ref+=1
     g.close()
 
-def make_out(path):
+def make_out(path,sym):
     data = subprocess.check_output('gcartesian '+path, shell=True)
+    data = data.split('\n')[1:]
+    data1=[]
+    for i in data:
+	if len(i)>1:
+    		data1.append(sym[i[0]]+'  '+i[1:])
+    data=data1
+    data = '\n'.join(data) 
     g=open(path[:-4]+'.xyz','w')
     g.write(data)
     g.close()
 
+# default .com file
 def make_xyz(path):
+    sym={'15':'P','14':'Si','1':'H','7':'N','8':'O','6':'C','53':'I','36':'Kr','9':'F'}
     if path.split('.')[-1]=='fchk':
         make_fchk(path)
         return 2
     elif path.split('.')[-1]=='out':
-        make_out(path)
+        make_out(path,sym)
         return 3
+    elif path.split('.')[-1]=='xyz':
+	return 4
     f=open(path,'r')
     lines=f.readlines()
     f.close()
@@ -88,7 +100,7 @@ def make_xyz(path):
             list1=line.strip().split()
             try:
                 if len(line.strip().split())==2:
-                    lis+=line
+                    pass
                 else:
                     int(list1[0])
                     lis+=sym[list1[0]]+'  '+' '.join(list1[1:])+'\n'
