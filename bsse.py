@@ -9,7 +9,8 @@ def func(path):
 		return
 	name=path.replace('/','_')
 	filename=path.split('/')[-1].split('.')[0]
-	m,m_=filename.split('_')
+	li=filename.split('_')
+	m,m_=li[0],'_'.join(li[1:])
 	mg=open('monomers'+'/'+m+'.txt')
 	g=''
 	for line in mg:
