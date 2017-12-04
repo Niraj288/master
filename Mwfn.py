@@ -15,6 +15,8 @@ for i in os.listdir('.'):
                 processes.append(p)
 		q=multiprocessing.Process(target=gaussian, args=(i,'5\n12\n1\n2\n'))
                 processes.append(q)
+		r=multiprocessing.Process(target=gaussian, args=(i,'12\n0\n'))
+                #processes.append(r)
 
 for p in processes:
 	p.start()
