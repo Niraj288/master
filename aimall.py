@@ -21,13 +21,13 @@ def gauss_claculations(path):
                                         #mode='mm'
                                         directories[filename]=1
                                                  #threading.Thread(target=threa, args=(path,mode,filename,)).start()
-                                        p=multiprocessing.Process(target=threa, args=("aimqb.ish -nogui "+i,))
+                                        p=multiprocessing.Process(target=threa, args=("/hpc/applications/aimall/17.01.25/aimqb.ish -nogui "+i,))
                                         processes.append(p)
                         else:
                                 filename=i.strip().split('.')[0]
                                 #mode='mm'
                                 directories[filename]=1
-                                threading.Thread(target=threa, args=("aimqb.ish -nogui "+i,)).start()
+                                threading.Thread(target=threa, args=("/hpc/applications/aimall/17.01.25/aimqb.ish -nogui "+i,)).start()
                                 #p=multiprocessing.Process(target=threa, args=("aimqb.ish -nogui "+i,))
                                 #processes.append(p)
 
