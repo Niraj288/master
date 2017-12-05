@@ -31,7 +31,10 @@ def lmode(path):
 				index=6
 			print line.strip().split()[index:index+3]
 			bond,q_n,ka,wa=line.strip().split()[index:index+3]+[line.strip().split()[9]]
-			d[filename].append(['bond,q_n,ka,wa',bond,float(q_n),float(ka),float(wa)])
+			comment=line.strip().split()[1:5]
+			while comment[-1]=='0':
+				comment.pop()
+			d[filename].append(['bond,q_n,ka,wa',bond,float(q_n),float(ka),float(wa),' '.join(comment)])
 		if ref_l==4:
 			ref_l=0
 		
@@ -77,6 +80,7 @@ sheet.write(0,2,'Bond length')
 sheet.write(0,3,'Ka')
 sheet.write(0,4,'wa')
 sheet.write(0,5,'Comments')
+sheet.write(0,6,'Path')
 
 num=0
 for i in d:
@@ -90,11 +94,12 @@ for i in d:
 		if 'wo' in j:
 			continue
 		elif 'path' in j:
-			sheet.write(c,5,j[1])
+			sheet.write(c,6,j[1])
 		else:
 			sheet.write(num,1,j[1])
 			sheet.write(num,2,j[2])
 			sheet.write(num,3,j[3])
 			sheet.write(num,4,j[4])
+			sheet.write(num,5,j[5])
 			num+=1
 wb.save('lmode.xls')
