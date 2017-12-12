@@ -19,7 +19,7 @@ def get_s2(path):
 			else:
 				para=lines[i].strip().split()[2]
 				params=para[2:len(para)-1].split(',')
-				st+='std    '+'    '.join(params)+'    :    '+para+'\n' 
+				st+='std    '+'    '.join(params)+'    :    '+'-'.join(para.split(','))+'\n' 
 		if '-----------' in lines[i]:
 			ref+=1
 		if ref==3:
