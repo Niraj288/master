@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import os
 import module
+import sys
 
 def search_deep(n_path):
        	if 'Trash' in n_path:
@@ -29,6 +30,11 @@ for i in li:
 	else:
 		d[f]=[1,i]
 r_lis=[]
+if '-all' in sys.argv:
+	ref=1
+else:
+	ref=0
+
 for i in d:
 	if  d[i][0]>1:
 		li=d[i][1:]
@@ -38,7 +44,7 @@ for i in d:
 			print j
 		print '*****************'
 		print ''
-		if raw_input('clean '+i+'(y/n) : ')=='y':
+		if ref or raw_input('clean '+i+'(y/n) : ')=='y':
 			r_lis+=li[:-1]
 if len(r_lis)>0:
 	os.system('mkdir Trash')
