@@ -28,11 +28,17 @@ def func(path):
                 print 'More than 1 Imaginiary frequencies in '+path
         if 'Normal termination of Gaussian' not in file_[-1]:
                 print 'Error termination in '+path
-p=''
-if len(sys.argv)>1:
-	p=sys.argv[1]
-path=p or raw_input("Enter path : ")
-module.search_deep(path,func,['g16.out','g09.out'])
+                ref_f=3
+        if ref_f!=1:
+                return 0
+        return 1
+
+if __name__=='__main__':
+        p=''
+        if len(sys.argv)>1:
+        	p=sys.argv[1]
+        path=p or raw_input("Enter path : ")
+        module.search_deep(path,func,['g16.out','g09.out'])
 
 
 
