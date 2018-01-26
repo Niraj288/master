@@ -15,7 +15,10 @@ print d
 for f in d:
 	a,l=d[f]
 	if a>1:
-		os.mkdir(f)
+		try:
+			os.mkdir(f)
+		except OSError:
+			pass
 		for b,c in l:
 			try :
 				os.rename(b,c)

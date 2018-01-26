@@ -43,7 +43,7 @@ def gauss_claculations(lis_paths):
 	refe=0
 	if '-all' in sys.argv or referance==1:
 		refe=1
-	elif raw_input('Send all .g16 or .inp files in the directory ?? (y/n) : ')=='y':
+	elif raw_input('Send all .g16 or .g09 files in the directory ?? (y/n) : ')=='y':
 		refe=1
 	if len(lis_paths)>0:
 		refe=1
@@ -51,23 +51,23 @@ def gauss_claculations(lis_paths):
 	else:
 		paths=os.listdir(os.getcwd()) 
 	for i in paths:
-	        if '.g16'==i[-4:] or '.inp'==i[-4:]:
+	        if i[-4:] in ['.g09','.g16']:
 	        	if refe==0:
 	        		if raw_input('Submit job for '+i+' ? (y/n) : ')=='y':
 		               		 filename=i.strip().split('.')[0]
 		               		 #mode='mm'
 		               		 directories[filename]=1
-		               		 path=filename+'.g16'
+		               		 #path=filename+'.g16'
 		               		 #threading.Thread(target=threa, args=(path,mode,filename,)).start()
-		               		 p=multiprocessing.Process(target=threa, args=("grun "+path+' '+mode,))
+		               		 p=multiprocessing.Process(target=threa, args=("grun "+i+' '+mode,))
 		               		 processes.append(p)
 		        else:
 		        	filename=i.strip().split('.')[0]
 		                #mode='mm'
 		                directories[filename]=1
-		                path=filename+'.g16'
+		                #path=filename+'.g16'
 		                #threading.Thread(target=threa, args=(path,mode,filename,)).start()
-		                p=multiprocessing.Process(target=threa, args=("grun "+path+' '+mode,))
+		                p=multiprocessing.Process(target=threa, args=("grun "+i+' '+mode,))
 		                processes.append(p)
 
 	for p in processes:
