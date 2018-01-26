@@ -23,7 +23,7 @@ search_deep(path)
 
 d={}
 for i in li:
-	f=i[:-6]
+	f='_'.join(i.split('_')[:-1])
 	if f in d:
 		d[f][0]+=1
 		d[f].append(i)
@@ -38,7 +38,7 @@ else:
 for i in d:
 	if  d[i][0]>1:
 		li=d[i][1:]
-		li.sort()
+		li=sorted(li, key=lambda j_id: int(j_id.split('_')[-1]))
 		print '*****************'
 		for j in li:
 			print j

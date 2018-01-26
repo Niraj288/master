@@ -11,7 +11,7 @@ def func(path):
 def job(path,args,dire):
 	os.chdir(path)
 	os.system("mkdir "+dire)
-	module.search_deep(path,func,eval(args))
+	module.search_deep(path,func,args)
 
 if __name__=='__main__':
 	path=raw_input("Enter path : ")
