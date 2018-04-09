@@ -6,6 +6,7 @@ def func(path):
 	f=open(path,'r')
 	lines=f.readlines()[-10:]
 	f.close()
+	k=[]
 	for line in lines:
 		if 'Job cpu time' in line:
 			k=line.strip().split()
@@ -13,6 +14,7 @@ def func(path):
 			d['h']+=float(k[5])
 			d['m']+=float(k[7])
 			d['s']+=float(k[9])
+	print path,k[3:10]
 	return
 
 d={'d':0,'h':0,'m':0,'s':0}
