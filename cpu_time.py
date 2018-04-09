@@ -18,7 +18,7 @@ def func(path):
 	return
 
 d={'d':0,'h':0,'m':0,'s':0}
-path='/'.join(os.getcwd().split('/')[:3])+'/test'
+path='/'.join(os.getcwd().split('/')[:3])+'/scratch'
 print 'Searching in',path
 module.search_deep(path,func,['.out'])
 
