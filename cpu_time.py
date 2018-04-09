@@ -1,4 +1,5 @@
 import module
+import os
 
 def func(path):
 	global d
@@ -15,8 +16,9 @@ def func(path):
 	return
 
 d={'d':0,'h':0,'m':0,'s':0}
-path=raw_input("Enter path : ")
-module.search_deep(path,func,['.g16.out'])
+path='/'.join(os.getcwd().split('/')[:3])+'/test'
+print 'Searching in',path
+module.search_deep(path,func,['.out'])
 
 time=d['d']*24*60*60+d['h']*60*60+d['m']*60+d['s']
 
