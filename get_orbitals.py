@@ -24,12 +24,22 @@ def orbitals(file,d):
 			lis=lines[i].strip().split()
 			for j in d[name]:
 				if j in lis:
-					d[name][j].append(lis[-5:]+num_table+sym_table)
+					d[name][j].append([lis[0]]+lis[-5:]+num_table+sym_table)
+
+	lale=''
 	for i in d:
 		for j in d[i]:
 			if j!='id':
+
 				for k in d[i][j]:
-					print i,d[i]['id'],j,' '.join(k)
+					if k[-5:]==lale:
+						print k[0],i,d[i]['id']+' '+"{:>10} {:>10} {:>10} {:>10} {:>10}".format(*k[1:6]) 
+					else:
+						print ' '*5+"{:>10} {:>10} {:>10} {:>10} {:>10}".format(*k[6:11]) 
+						print ' '*5+"{:>10} {:>10} {:>10} {:>10} {:>10}".format(*k[11:])
+						print k[0],i,d[i]['id']+' '+"{:>10} {:>10} {:>10} {:>10} {:>10}".format(*k[1:6]) 
+					#print k[0],i,d[i]['id'],j,' '.join(k)
+					lale=k[-5:]
 
 
 def job():
