@@ -5,14 +5,14 @@ def orbitals(file,d):
 	lines=f.readlines()
 	f.close()
 	ref=0
-	sym_table=[]
+	sym_table,num_table=[],[]
 	name,id='',''
 	for i in range (len(lines)):
 		if i==ref:
 			continue
 		if 'Eigenvalues --' in lines[i]:
 			sym_table=lines[i-1].strip().split()
-
+			num_table=lines[i-2].strip().split()
 		if 'Molecular Orbital Coefficients:' in lines[i]:
 			ref=i+1
 
@@ -24,7 +24,7 @@ def orbitals(file,d):
 			lis=lines[i].strip().split()
 			for j in d[name]:
 				if j in lis:
-					d[name][j].append(lis[-5:]+sym_table)
+					d[name][j].append(lis[-5:]+num_table+sym_table)
 	for i in d:
 		for j in d[i]:
 			if j!='id':
@@ -34,7 +34,7 @@ def orbitals(file,d):
 
 def job():
 	d={}
-	atoms=raw_input('Enter atom and orbitals (Eg. C 1 2px 2py.. ) :')
+	atoms=raw_input('Enter atom and orbitals (Eg. C 1 2PX 2PY.. ) :')
 	while len(atoms)!=0:
 		lis=atoms.split()
 		d[lis[0]]={'id':lis[1]}
