@@ -1,13 +1,28 @@
 import sys
 
+def progress(count, total, status=''):
+    bar_len = 60
+    filled_len = int(round(bar_len * count / float(total)))
+
+    percents = round(100.0 * count / float(total), 1)
+    bar = '=' * filled_len + '-' * (bar_len - filled_len)
+
+    sys.stdout.write('[%s] %s%s ...%s\r' % (bar, percents, '%', status))
+    sys.stdout.flush() 
+
 def orbitals(file,d):
 	f=open(file,'r')
 	lines=f.readlines()
 	f.close()
 	ref=0
+	count=0
 	sym_table,num_table=[],[]
 	name,id='',''
+	total=len(lines)
 	for i in range (len(lines)):
+		progress(i, total, status='Progress ')
+		if 'Condensed to atoms (all electrons):' in lines:
+			break
 		if i==ref:
 			continue
 		if 'Eigenvalues --' in lines[i]:
@@ -23,8 +38,16 @@ def orbitals(file,d):
 		if name in d and id==d[name]['id']:
 			lis=lines[i].strip().split()
 			for j in d[name]:
-				if j in lis:
+				if len(j.split())>1:
+					check_li=lines[i]
+				else:
+					check_li=lis 
+				if j in check_li:
+					count+=1
+					#sys.stdout.write("\rPoints found : %i" % count)
+					#sys.stdout.flush()
 					d[name][j].append([lis[0]]+lis[-5:]+num_table+sym_table)
+	print '\n'*2
 
 	lale=''
 	for i in d:
@@ -49,9 +72,11 @@ def job():
 		lis=atoms.split()
 		d[lis[0]]={'id':lis[1]}
 		for j in lis[2:]:
-			d[lis[0]][j]=[]
+			s=j.replace('_',' ')
+			d[lis[0]][s]=[]
 
 		atoms=raw_input('Enter another atom and orbitals (leave blank if not) :')
+	print d
 	st=orbitals(sys.argv[1],d)
 
 job()
