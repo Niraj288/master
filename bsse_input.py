@@ -52,4 +52,7 @@ def job(path):
 		print path
 		func(path)
 
+if __name__=='__main__':
+	for i in os.listdir('.'):
+		job(i)
 
