@@ -21,7 +21,7 @@ for i in d:
 	if len(d[i])==0:
 		print i	
 	
-
+os.system('rm -rf test.txt')
 
 
 

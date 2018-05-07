@@ -15,7 +15,7 @@ def get_xyz(path):
     f.close()
     lis=''
     ref=0
-    sym={'15':'P','14':'Si','1':'H','7':'N','8':'O','6':'C','53':'I','36':'Kr','9':'F'}
+    sym={'78':'Pt','15':'P','14':'Si','1':'H','7':'N','8':'O','6':'C','53':'I','36':'Kr','9':'F'}
     for line in lines:
         if '#p ' in line:
             ref+=1
@@ -96,7 +96,7 @@ def bsse_nbo(files,mode):
 		if res==0:
 			it=1
 		else:
-			time.sleep(5)
+			time.sleep(1800)
 	return
 
 def wfx():
