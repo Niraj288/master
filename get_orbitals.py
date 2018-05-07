@@ -17,7 +17,7 @@ def orbitals(file,d):
 	ref=0
 	count=0
 	sym_table,num_table=[],[]
-	name,id='',''
+	name,id=None,None
 	total=len(lines)
 	for i in range (len(lines)):
 		progress(i, total, status='Progress ')
@@ -30,12 +30,13 @@ def orbitals(file,d):
 			num_table=lines[i-2].strip().split()
 		if 'Molecular Orbital Coefficients:' in lines[i]:
 			ref=i+1
+			count=1
 
 		for j in d:
-			if j in lines[i].strip().split():
+			if count and j in lines[i].strip().split():
 				name=j 
 				id=lines[i].strip().split()[1]
-		if name in d and id==d[name]['id']:
+		if count and name in d and id==d[name]['id']:
 			lis=lines[i].strip().split()
 			for j in d[name]:
 				if len(j.split())>1:
@@ -58,9 +59,9 @@ def orbitals(file,d):
 					if k[-5:]==lale:
 						print k[0],i,d[i]['id']+' '+"{:>10} {:>10} {:>10} {:>10} {:>10}".format(*k[1:6]) 
 					else:
-						print ' '*5+"{:>10} {:>10} {:>10} {:>10} {:>10}".format(*k[6:11]) 
-						print ' '*5+"{:>10} {:>10} {:>10} {:>10} {:>10}".format(*k[11:])
-						print k[0],i,d[i]['id']+' '+"{:>10} {:>10} {:>10} {:>10} {:>10}".format(*k[1:6]) 
+						print ' '*10+"{:>10} {:>10} {:>10} {:>10} {:>10}".format(*k[6:11]) 
+						print ' '*10+"{:>10} {:>10} {:>10} {:>10} {:>10}".format(*k[11:])
+						print k[0],i,d[i]['id'],j,' '+"{:>10} {:>10} {:>10} {:>10} {:>10}".format(*k[1:6]) 
 					#print k[0],i,d[i]['id'],j,' '.join(k)
 					lale=k[-5:]
 
