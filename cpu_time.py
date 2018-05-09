@@ -34,7 +34,7 @@ def log_file(path):
 def func(path):
 	if './.'==path[:3]:
 		return
-	global d
+	global d,count
 	f=open(path,'r')
 	lines=f.readlines()[-10:]
 	f.close()
@@ -47,6 +47,7 @@ def func(path):
 			d['m']+=k[2]
 			d['s']+=k[3]
 			print path,k
+			count+=1
 			return
 
 	for line in lines:
@@ -59,13 +60,16 @@ def func(path):
 			d['m']+=float(k[7])
 			d['s']+=float(k[9])
 			print path,k[3:10]
+			count+=1
 		elif 'CPU TIMES  *' in line:
 			k=line.strip().split()
 			d['s']+=float(k[3].split('.')[0])
 			print path,[0,0,0,k[3]]
+			count+=1
 		
 	return
 
+count=0
 d={'d':0,'h':0,'m':0,'s':0}
 path=raw_input("Enter path : ") or '/'.join(os.getcwd().split('/')[:3])+'/scratch'
 print 'Searching in',path
@@ -85,4 +89,5 @@ print 'Days : ',day
 print 'Hours : ',hour
 print 'Minutes : ',minutes
 print 'Seconds : ',seconds
+print '\nNumber of files :',count
 
