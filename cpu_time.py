@@ -32,23 +32,28 @@ def log_file(path):
 		return [day,h,m,s]
 
 def func(path):
+	if './.'==path[:3]:
+		return
 	global d
 	f=open(path,'r')
 	lines=f.readlines()[-10:]
 	f.close()
 	k=[]
 	if path[-4:]=='.log':
-		k=log_file(path)
-		d['d']+=k[0]
-		d['h']+=k[1]
-		d['m']+=k[2]
-		d['s']+=k[3]
-		print path,k
-		return
+		if 'MOLCAS' in ''.join(lines[:50]):
+			k=log_file(path)
+			d['d']+=k[0]
+			d['h']+=k[1]
+			d['m']+=k[2]
+			d['s']+=k[3]
+			print path,k
+			return
 
 	for line in lines:
 		if 'Job cpu time' in line:
 			k=line.strip().split()
+			if k[9]=='****':
+				k[9]='0.0'
 			d['d']+=float(k[3])
 			d['h']+=float(k[5])
 			d['m']+=float(k[7])
@@ -56,13 +61,13 @@ def func(path):
 			print path,k[3:10]
 		elif 'CPU TIMES  *' in line:
 			k=line.strip().split()
-			d['s']+=float(k[3])
+			d['s']+=float(k[3].split('.')[0])
 			print path,[0,0,0,k[3]]
 		
 	return
 
 d={'d':0,'h':0,'m':0,'s':0}
-path='/'.join(os.getcwd().split('/')[:3])+'/scratch'
+path=raw_input("Enter path : ") or '/'.join(os.getcwd().split('/')[:3])+'/scratch'
 print 'Searching in',path
 module.search_deep(path,func,['.out','.log'])
 
