@@ -32,6 +32,7 @@ def log_file(path):
 		return [day,h,m,s]
 
 def func(path):
+	#print path
 	if './.'==path[:3]:
 		return
 	global d,count
@@ -66,7 +67,13 @@ def func(path):
 			d['s']+=float(k[3].split('.')[0])
 			print path,[0,0,0,k[3]]
 			count+=1
-		
+		elif 'TOTAL RUN TIME' in line:
+			k=line.strip().split()
+			d['d']+=float(k[3])
+			d['h']+=float(k[5])
+			d['m']+=float(k[7])
+			d['s']+=float(k[9])
+			print path,k[3:]		
 	return
 
 count=0
