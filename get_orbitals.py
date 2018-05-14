@@ -32,38 +32,51 @@ def orbitals(file,d):
 			ref=i+1
 			count=1
 
-		for j in d:
-			if count and j in lines[i].strip().split():
-				name=j 
-				id=lines[i].strip().split()[1]
-		if count and name in d and id==d[name]['id']:
-			lis=lines[i].strip().split()
-			for j in d[name]:
-				if len(j.split())>1:
-					check_li=lines[i]
-				else:
-					check_li=lis 
-				if j in check_li:
-					count+=1
-					#sys.stdout.write("\rPoints found : %i" % count)
-					#sys.stdout.flush()
-					d[name][j].append([lis[0]]+lis[-5:]+num_table+sym_table)
+		if count:
+			for j in d:
+				if j in lines[i].strip().split():
+					name=j 
+					id=lines[i].strip().split()[1]
+			if name in d and id==d[name]['id']:
+				lis=lines[i].strip().split()
+				for j in d[name]:
+					if len(j.split())>1:
+						check_li=lines[i]
+					else:
+						check_li=lis 
+					if j in check_li:
+						#count+=1
+						#sys.stdout.write("\rPoints found : %i" % count)
+						#sys.stdout.flush()
+						d[name][j].append([lis[0]]+lis[-len(sym_table):]+num_table+sym_table)
 	print '\n'*2
-
-	lale=''
+	#print d
+	lale,la='',5
 	for i in d:
 		for j in d[i]:
 			if j!='id':
 
 				for k in d[i][j]:
-					if k[-5:]==lale:
-						print k[0],i,d[i]['id'],j,'      '+"{:>15} {:>15} {:>15} {:>15} {:>15}".format(*k[1:6]) 
+					if k[-la:]==lale[-la:]:
+						if len(k)<16:
+							l=(len(k)-1)/3
+							print k[0],i,d[i]['id'],j,' '*15+"        ".join(k[1:l+1]) 
+						else:
+							print k[0],i,d[i]['id'],j,'      '+"{:>15} {:>15} {:>15} {:>15} {:>15}".format(*k[1:6]) 
 					else:
-						print ' '*15+"{:>15} {:>15} {:>15} {:>15} {:>15}".format(*k[6:11]) 
-						print ' '*15+"{:>15} {:>15} {:>15} {:>15} {:>15}".format(*k[11:])
-						print k[0],i,d[i]['id'],j,'      '+"{:>15} {:>15} {:>15} {:>15} {:>15}".format(*k[1:6]) 
+						if len(k)<16:
+							l=(len(k)-1)/3
+							print ' '*30+"             ".join(k[1+l:1+2*l])
+							print ' '*30+"             ".join(k[1+2*l:])
+							print k[0],i,d[i]['id'],j,' '*15+"        ".join(k[1:l+1]) 
+						else:
+							print ' '*15+"{:>15} {:>15} {:>15} {:>15} {:>15}".format(*k[6:11]) 
+							print ' '*15+"{:>15} {:>15} {:>15} {:>15} {:>15}".format(*k[11:])
+							print k[0],i,d[i]['id'],j,'      '+"{:>15} {:>15} {:>15} {:>15} {:>15}".format(*k[1:6]) 
 					#print k[0],i,d[i]['id'],j,' '.join(k)
-					lale=k[-5:]
+					la=(len(k)-1)/3
+					lale=k[-la:]
+					
 
 
 def job():
