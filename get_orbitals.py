@@ -10,6 +10,19 @@ def progress(count, total, status=''):
     sys.stdout.write('[%s] %s%s ...%s\r' % (bar, percents, '%', status))
     sys.stdout.flush() 
 
+def get_atoms(lines,index):
+	dic={}
+	for i in range (index,len(lines)):
+		line=lines[i]
+		if len(line.strip().split())==0:
+			break
+		a=line.strip().split()[0]
+		if a not in dic:
+			dic[a]=1
+		else:
+			dic[a]+=1
+	return dic
+
 def orbitals(file,d):
 	f=open(file,'r')
 	lines=f.readlines()
@@ -19,7 +32,11 @@ def orbitals(file,d):
 	sym_table,num_table=[],[]
 	name,id=None,None
 	total=len(lines)
+	string=''
 	for i in range (len(lines)):
+		if 'Symbolic Z-matrix:' in lines[i]:
+			atoms=get_atoms(lines,i+2)
+			#print atoms
 		progress(i, total, status='Progress ')
 		if 'Condensed to atoms (all electrons):' in lines:
 			break
@@ -28,15 +45,18 @@ def orbitals(file,d):
 		if 'Eigenvalues --' in lines[i]:
 			sym_table=lines[i-1].strip().split()
 			num_table=lines[i-2].strip().split()
+			string+=lines[i-2]
+			string+=lines[i-1]
 		if 'Molecular Orbital Coefficients:' in lines[i]:
 			ref=i+1
 			count=1
 
 		if count:
-			for j in d:
+			for j in atoms:
 				if j in lines[i].strip().split():
 					name=j 
 					id=lines[i].strip().split()[1]
+					#print name,id
 			if name in d and id==d[name]['id']:
 				lis=lines[i].strip().split()
 				for j in d[name]:
@@ -48,7 +68,10 @@ def orbitals(file,d):
 						#count+=1
 						#sys.stdout.write("\rPoints found : %i" % count)
 						#sys.stdout.flush()
+						string+=lines[i]#+'    '+name+' '+id
 						d[name][j].append([lis[0]]+lis[-len(sym_table):]+num_table+sym_table)
+	print string
+	'''
 	print '\n'*2
 	#print d
 	lale,la='',5
@@ -76,6 +99,7 @@ def orbitals(file,d):
 					#print k[0],i,d[i]['id'],j,' '.join(k)
 					la=(len(k)-1)/3
 					lale=k[-la:]
+	'''
 					
 
 
