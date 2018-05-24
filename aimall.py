@@ -11,7 +11,10 @@ def threa(command):
 
 def gauss_claculations(path):
         refe=1
-        keyword='.wfx'
+	if len(sys.argv)>1:
+		keyword=sys.argv[1]
+	else:
+        	keyword='.wfx'
 	processes=[]
         for i in os.listdir(path):
                 if  keyword==i[-len(keyword):]:
