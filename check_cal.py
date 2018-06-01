@@ -4,14 +4,23 @@ import module
 import sys
 
 def func(path):
-       
+        #print path 
         ref,ref_f=0,1
         file=open(path,'r')
         file_=file.readlines()
         file.close()
-        if 'Gaussian' not in ''.join(file_[0:5]):
+    
+	if 'Normal termination of Gaussian' in file_[-1] and '-done' in sys.argv:
+                print 'Normal termination in '+path
+	if 'ORCA TERMINATED NORMALLY' in file_[-2] and '-done' in sys.argv:
+                print 'Normal termination in '+path
+	if 'O   R   C   A ' in ''.join(file_[:1000]) and 'ORCA TERMINATED NORMALLY' not in file_[-2]:
+		print 'Error termination in '+path
+		return
+	if 'Gaussian' not in ''.join(file_[0:5]):
                 return
-
+	if '-done' in sys.argv:
+		return
         for line in file_:
                 if 'Frequencies' in line:
                         k=line.strip().split()
@@ -38,7 +47,7 @@ if __name__=='__main__':
         if len(sys.argv)>1:
         	p=sys.argv[1]
         path=p or raw_input("Enter path : ")
-        module.search_deep(path,func,['g16.out','g09.out'])
+        module.search_deep(path,func,['out'])
 
 
 
