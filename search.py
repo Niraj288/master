@@ -5,7 +5,7 @@ s=raw_input('What do you want to search :')
 d_ref=raw_input('Files/Directories u want to ignore :')
 e_ref=raw_input('Any particular file extensions :')
 d_ref=d_ref.split(',')
-s=s.split()
+s=s.split(',')
 l_s=len(s)
 for i in range (l_s):
 	s[i]=s[i].lower()
@@ -22,18 +22,18 @@ def getPDFContent(path,i):
     path.remove(i)
     path='/'.join(path)
     prin(li,i,path)
-def prin(lis,jk,path):
-	global k_ref,l_s
-	for j in range (len(lis)):
-		if s[0]==lis[j]:
-			if s==lis[j:j+l_s]:
+def prin(lines,jk,path):
+	global k_ref,l_s,s
+	for j in lines:
+		for i in range (l_s):
+			if s[i] in j:
 				k_ref=1
 				print ':) found in '+path+'/'+jk
 				break
 
 def search(i,n_path):
 	#for i in os.listdir(path):
-	print i,n_path,'search'
+
 	try:
 		os.chdir(n_path)
 		if i[-4:]=='.pdf':
@@ -44,11 +44,9 @@ def search(i,n_path):
 				pass
 			else:
 				k=open(i,'r')
-				lis=[]
-				for j in k:
-					lis+=[x.lower() for x in j.split()]
-				#d[i]=lis
-				prin(lis,i,n_path)
+				lines=k.readlines()
+				k.close()
+				prin(lines,i,n_path)
 	except IOError:
 		print '-->>:( '+i,' is out of scope for python and so its ignored'
 	
