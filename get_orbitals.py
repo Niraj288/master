@@ -27,6 +27,10 @@ def orbitals(file,d):
 	f=open(file,'r')
 	lines=f.readlines()
 	f.close()
+	ref_p=0
+	#print len(lines)
+	if len(lines)>10000:
+		ref_p=1
 	ref=0
 	count=0
 	sym_table,num_table=[],[]
@@ -37,7 +41,8 @@ def orbitals(file,d):
 		if 'Symbolic Z-matrix:' in lines[i]:
 			atoms=get_atoms(lines,i+2)
 			#print atoms
-		progress(i, total, status='Progress ')
+		if ref_p:
+			progress(i, total, status='Progress ')
 		if 'Condensed to atoms (all electrons):' in lines:
 			break
 		if i==ref:
