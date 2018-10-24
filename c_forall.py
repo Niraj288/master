@@ -1,41 +1,35 @@
 #!/usr/bin/python
-import os 
+import os
 import module
 import sys
 import multiprocessing
-
-def threa(args1,path):
-	os.chdir('/'.join(path.split('/')[:-1]))
-	os.system(s)
-        sys.stdout.flush()
+import copy
 
 def func(path):
-	global args1
-	filename=path.split('/')[-1].split('.')[0]
-	if '-d' in args1:
-        	os.chdir('/'.join(path.split('/')[:-1]))
-                args1.remove('-d')
-		for arg in args1:
-                	if '-p' in arg or '-f' in arg:
-                        	s=arg.replace('-f',filename)
-                        	s=s.replace('-p',path)
-                        	print 'Performing :',s,'...'
-				multiprocessing.Process(target=threa, args=(s,path)).start()
-                	else:
-                	        multiprocessing.Process(target=threa, args=(arg,path)).start()
-		return
-	for arg in args1:
-		if '-p' in arg or '-f' in arg:
-			s=arg.replace('-f',filename)
-			s=s.replace('-p',path)
-			print 'Performing :',s,'...'
-			os.system(s)
-			sys.stdout.flush()
-		else:
-			os.system(arg)
-			sys.stdout.flush()
+        global args1,path_lis
+        filename=path.split('/')[-1].split('.')[0]
+        ref = 0
+        if '-d' in args1:
+                path_lis.append(path)
+                return
+        #print temp_args1
+        #print os.getcwd()
+        for arg in args1:
+                if '-p' in arg or '-f' in arg:
+                        s=arg.replace('-f',filename)
+                      
+                        s=s.replace('-p',path)
+                        print 'Performing :',s,'...'
+                        os.system(s)
+                        sys.stdout.flush()
+                else:
+                        os.system(arg)
+                        sys.stdout.flush()
+        
 
 path=raw_input("Enter path : ")
+o_path = os.getcwd()
+path_lis = []
 lis=raw_input("Enter keyword for filename : ")
 lis=lis.replace(',','","')
 lis=eval('["'+lis+'"]')
@@ -46,4 +40,39 @@ args1=raw_input("Enter comma separated Commands : ")
 args1=args1.replace(',','","')
 args1=eval('["'+args1+'"]')
 module.search_deep(path,func,lis)
+
+print path_lis
+
+if len(path_lis)>0:
+        args1.remove('-d')
+        for path in path_lis:
+                #print 'Back on :',os.getcwd()
+                filename=path.split('/')[-1].split('.')[0]
+                file_path = '/'.join(path.split('/')[:-1])
+                file = path.split('/')[-1]
+                os.chdir(file_path)
+                #print 'working on :',os.getcwd()
+                for arg in args1:
+                        if '-p' in arg or '-f' in arg:
+                                s=arg.replace('-f',filename)
+
+                                s=s.replace('-p',file)
+                                print 'Performing :',s,'...'
+                                os.system(s)
+                                sys.stdout.flush()
+                        else:
+                                os.system(arg)
+                                sys.stdout.flush()
+                os.chdir(o_path)
+
+
+
+
+
+
+
+
+
+
+
 
