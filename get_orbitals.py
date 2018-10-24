@@ -47,6 +47,7 @@ def orbitals(file,d):
 					count+=1
 					#sys.stdout.write("\rPoints found : %i" % count)
 					#sys.stdout.flush()
+					print [lis[0]]+lis[-5:]+num_table+sym_table
 					d[name][j].append([lis[0]]+lis[-5:]+num_table+sym_table)
 	print '\n'*2
 

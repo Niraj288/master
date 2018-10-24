@@ -32,17 +32,32 @@ def lmode(path):
 				float(line.strip().split()[6])
 			except ValueError:
 				index=6
-			if len(line.strip().split()[index:])==6:
+			rq=0
+			if '?' in line:
+				rq=1
+			if len(line.strip().split()[index:])==6+rq:
 				st=line.strip().split()
-				print [st[index]]+[st[index+1]]+[st[index+3]]+[line.strip().split()[-1]]
-				bond,q_n,ka,wa=[st[index]]+[st[index+1]]+[st[index+3]]+[line.strip().split()[-1]]
-                        	d[filename].append(['bond,q_n,ka,wa',bond,float(q_n),float(ka),float(wa)])
-                        	f[filename].append([bond,float(q_n),float(ka),float(wa)])
+                        	if '?' in line:
+					print [st[index]]+[st[index+1]]+[st[index+3]]+[line.strip().split()[-2]]
+                                	bond,q_n,ka,wa=[st[index]]+[st[index+1]]+[st[index+3]]+[line.strip().split()[-2]]
+					d[filename].append(['bond,q_n,ka,wa',bond,float(q_n),float(ka),float(wa),'??'])
+                        		f[filename].append([bond,float(q_n),float(ka),float(wa),'--'])
+				else:
+					print [st[index]]+[st[index+1]]+[st[index+3]]+[line.strip().split()[-1]]
+                                        bond,q_n,ka,wa=[st[index]]+[st[index+1]]+[st[index+3]]+[line.strip().split()[-1]]
+					d[filename].append(['bond,q_n,ka,wa',bond,float(q_n),float(ka),float(wa),'--'])
+                                        f[filename].append([bond,float(q_n),float(ka),float(wa),'--'])
 			else:
-				print line.strip().split()[index:index+3]+[line.strip().split()[-1]]
-				bond,q_n,ka,wa=line.strip().split()[index:index+3]+[line.strip().split()[-1]]
-				d[filename].append(['bond,q_n,ka,wa',bond,float(q_n),float(ka),float(wa)])
-				f[filename].append([bond,float(q_n),float(ka),float(wa)])
+				if '?' in line:
+					print line.strip().split()[index:index+3]+[line.strip().split()[-2]]
+                                	bond,q_n,ka,wa=line.strip().split()[index:index+3]+[line.strip().split()[-2]]
+                                        d[filename].append(['bond,q_n,ka,wa',bond,float(q_n),float(ka),float(wa),'??'])
+                                        f[filename].append([bond,float(q_n),float(ka),float(wa),'--'])
+                                else:
+					print line.strip().split()[index:index+3]+[line.strip().split()[-1]]
+                                	bond,q_n,ka,wa=line.strip().split()[index:index+3]+[line.strip().split()[-1]]
+                                        d[filename].append(['bond,q_n,ka,wa',bond,float(q_n),float(ka),float(wa),'--'])
+                                        f[filename].append([bond,float(q_n),float(ka),float(wa),'--'])
 		if ref_l==4:
 			ref_l=0
 		
