@@ -55,7 +55,7 @@ def orbitals(file,d):
 		if 'Molecular Orbital Coefficients:' in lines[i]:
 			ref=i+1
 			count=1
-
+      
 		if count:
 			for j in atoms:
 				if j in lines[i].strip().split():

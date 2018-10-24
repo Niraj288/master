@@ -7,8 +7,6 @@ e_ref=raw_input('Any particular file extensions :')
 d_ref=d_ref.split(',')
 s=s.split(',')
 l_s=len(s)
-for i in range (l_s):
-	s[i]=s[i].lower()
 k_ref=0
 def getPDFContent(path,i):
     content = ""
@@ -22,6 +20,7 @@ def getPDFContent(path,i):
     path.remove(i)
     path='/'.join(path)
     prin(li,i,path)
+    
 def prin(lines,jk,path):
 	global k_ref,l_s,s
 	for j in lines:
@@ -44,9 +43,11 @@ def search(i,n_path):
 				pass
 			else:
 				k=open(i,'r')
+        
 				lines=k.readlines()
 				k.close()
 				prin(lines,i,n_path)
+
 	except IOError:
 		print '-->>:( '+i,' is out of scope for python and so its ignored'
 	

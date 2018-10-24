@@ -52,7 +52,7 @@ def string(path):
 
 @DATAFILEPATH = "IRC.browse"
 
-@BASEPATH = "./"
+@BASEPATH = "/users/nirajv/urva/"
 
 
 
