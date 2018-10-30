@@ -27,7 +27,7 @@ def func(path):
                         sys.stdout.flush()
         
 
-path=raw_input("Enter path : ")
+path = os.getcwd()
 o_path = os.getcwd()
 path_lis = []
 lis=raw_input("Enter keyword for filename : ")
