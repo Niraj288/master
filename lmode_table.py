@@ -35,6 +35,8 @@ def lmode(path):
 			rq=0
 			if '?' in line:
 				rq=1
+			if 'Unphysical' in line:
+				continue
 			if len(line.strip().split()[index:])==6+rq:
 				st=line.strip().split()
                         	if '?' in line:
@@ -86,7 +88,7 @@ def search_deep(n_path):
 		#raise Exception('Not a directory ')
 search_deep(path)
 np.save('Data.npy',f)
-print d
+#print d
 
 if k_ref==0:
 	print "\n:( no files found in the specified path :'( "
