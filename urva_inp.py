@@ -8,7 +8,7 @@ def get_s2(path):
 	index,ref=-1,0
 	st=''
 	for line in lines:
-		if 'Optimized Parameters' in line:
+		if 'Optimized Parameters' in line or 'Initial Parameters' in line:
 			index=ref
 		ref+=1
 	ref=0
