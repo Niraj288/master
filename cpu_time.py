@@ -80,7 +80,13 @@ def func(path):
 			d['h']+=check_float(k[5])
 			d['m']+=check_float(k[7])
 			d['s']+=check_float(k[9])
-			print path,k[3:]		
+			print path,k[3:]
+			count += 1
+		elif 'TOTAL CPU TIME' in line:
+			k=line.strip().split()
+			d['s']+=check_float(k[4])
+			print path,k[4:] 	
+			count += 1	
 	return
 
 def search_deep(n_path,func,args=[],ref=1):
@@ -123,4 +129,5 @@ print 'Hours : ',hour
 print 'Minutes : ',minutes
 print 'Seconds : ',seconds
 print '\nNumber of files :',count
+
 

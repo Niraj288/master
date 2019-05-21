@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import sys
 import os
 path=raw_input('Enter path :')
 ext=raw_input('Any particular extension : ')
@@ -28,12 +29,15 @@ def search_deep(n_path):
 				elif i==s+ext and l>1:
 					k_ref+=1
 					print '-> found a file : '+n_path+'/'+i 
+				if len(sys.argv) > 1:
+					if s in i:
+						print '-> found a file : '+n_path+'/'+i
 				#search(i,n_path)
 	except OSError:
 		raise Exception('Not a directory ')
 search_deep(path)
 
 if k_ref==0:
-	print "\n:( no files found in the specified path :'( "
+	print "\n:( no exact file found in the specified path :'( \n Try 'python search_dir.py 1' to get partial match"
 
 
