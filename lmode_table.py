@@ -95,7 +95,7 @@ if k_ref==0:
 
 wb=xlwt.Workbook() 
 
-sheet = wb.add_sheet(raw_input('Enter output sheet name : ') or path.split('/')[-1][:-4])
+sheet = wb.add_sheet('lmodes' or raw_input('Enter output sheet name : ') or path.split('/')[-1][:-4])
 
 sheet.write(0,0,'Name')
 sheet.write(0,1,'Bond')

@@ -35,7 +35,7 @@ st = st.replace('file', file)
 st = st.replace('proc', np)
 st = st.replace('mod', mod)
 
-st1 = '/users/nirajv/xtb_exe/bin/xtb ' +file + ' -hess\n'
+st1 = '/users/nirajv/xtb_exe/bin/xtb ' +file + ' --opt tight\n'
 
 f.write(st+st1) 
 f.close()

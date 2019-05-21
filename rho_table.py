@@ -50,7 +50,7 @@ def check(string):
         return False
 
 path=raw_input("Enter path : ")
-module.search_deep(path,func,['.sum'])
+module.search_deep(path,func,['.mgpvig'])
 
 
 #rb=xlrd.open_workbook('Data.xls', formatting_info=True)
@@ -78,7 +78,7 @@ print max_d
 i_ref=1
 print d
 for i in range (max_d+1):
-        if 1 or check(d[(index-1,'bn')]):
+        if check(d[(index-1,'bn')]):
 		d[(index-1,'bn')]='-'.join(d[(index-1,'bn')])
                 sheet.write(i_ref,0,d[(index-1,'bn')])
                 sheet.write(i_ref,1,d[(index-1,'rho')])
