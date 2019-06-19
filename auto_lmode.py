@@ -19,13 +19,31 @@ def get_log(filename):
     f.close()
     index,ref=-1,0
     st=''
+    at_ref = 0
+    d = {}
     for line in lines:
-        if 'Optimized Parameters' in line:
+        if at_ref == 1 and len(line.strip().split()) == 0:
+            at_ref = 100
+        if at_ref == 1:
+            d[len(d)+1] = line.strip().split()[0]
+        if 'Charge =' in line and at_ref == 0:
+            at_ref = 1
+        if 'Optimized Parameters' in line or 'Input Parameters' in line:
             index=ref
         ref+=1
     ref=0
+    
     r,a=0,0
     lm_st=''
+
+    def get_parm_name(parm):
+        p = map(int, parm)
+        p = map(abs, p)
+
+        p = map(lambda x: d[x]+str(x), p)
+        print p 
+        return ' : '+'-'.join(p)
+    
     for i in range (index,len(lines)):
         if ref==2:
             if len(lines[i].strip().split())<3:
@@ -35,10 +53,10 @@ def get_log(filename):
                 params=para[2:len(para)-1].split(',')
                 #print lines[i]
                 if int(params[-1])<0:
-                    lm_st+=' '.join(params[:3])+' '+params[4]+'\n'
+                    lm_st+=' '.join(params[:3])+' '+params[4]+get_parm_name(params[:3]+[params[4]])+'\n'
                     #print ' '.join(params),'is modified to : ',' '.join(params[:3])+' '+params[4]
                 else:
-                    lm_st+=' '.join(params)+'\n'
+                    lm_st+=' '.join(params)+get_parm_name(params)+'\n'
                 if para[0]=='R':
                     r+=1
                 elif para[0]=='A':
