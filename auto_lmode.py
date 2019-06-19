@@ -13,7 +13,6 @@ def distance(a,b):
 	return math.sqrt(res)
 
 def get_log(filename):
-    global f_max,f_min
     path=filename+'.g16.out'
     f=open(path,'r')
     lines=f.readlines()
@@ -34,6 +33,7 @@ def get_log(filename):
             else:
                 para=lines[i].strip().split()[2]
                 params=para[2:len(para)-1].split(',')
+                #print lines[i]
                 if int(params[-1])<0:
                     lm_st+=' '.join(params[:3])+' '+params[4]+'\n'
                     #print ' '.join(params),'is modified to : ',' '.join(params[:3])+' '+params[4]
@@ -49,23 +49,7 @@ def get_log(filename):
             ref+=1
         if ref==3:
             break
-    freq=None
-    c=0
-    for i in range (len(lines)):
-        if 'Frequencies --' in lines[i]:
-            ref=0
-            for j in lines[i].strip().split()[2:]:
-                #print j,lines[i-2].strip().split()[ref] 
-                if float(j)<f_max and float(j)>f_min:
-                    freq=lines[i-2].strip().split()[ref] 
-                    #print j,freq 
-                    c+=1
-                ref+=1
-    
-    if freq==None or c!=1:
-        freq=raw_input('Enter frequency number : ')
-    #print st
-    return r,a,lm_st,freq
+    return lm_st
 
 def get_lm_st(s):
     bl=list(itertools.combinations(s,2))
@@ -147,19 +131,6 @@ def get_cord__fchk(path):
         s[i]=str(int(float(s[i])))
     print s
 
-    c,n=None,None
-    for i in range (len(s)):
-        for j in range (len(s)):
-            if s[i]==atom1 and s[j]==atom2:
-                d=distance(cord[3*i:3*i+3],cord[3*j:3*j+3])
-                #print d,c,n
-                if d>d_min and d<d_max:
-                    c,n=i+1,j+1
-                    #print d,c,n
-                    break
-    if not c or not n:
-        print 'No bonds found!!'
-        #return
     filename=path.split('/')[-1].split('.')[0]
     f=open(path.split('/')[-1].split('.')[0]+'.alm1','w')
     s1="""
@@ -178,14 +149,14 @@ $qcdata
 
 $LocMod $End
 """
-    stretch,angle,lm_st,freq=get_log(filename)
+    lm_st=get_log(filename)
     #s4 = from_zmat(filename+'.fchk')
-    #s4=lm_st # to get parameters directly from gaussian output
+    s4=lm_st # to get parameters directly from gaussian output
     #s4=get_lm_st(map(str,range(1,len(s)+1))) # get permutations of all atoms
 
     f.write(s1+s2+s3+s4)
     f.close()
-    os.system("/Users/47510753/Downloads/LocalMode-2016/lmodes.exe -b "+'< '+filename+'.alm1' +' >'+' '+filename+'.out1')
+    os.system("lmode -b "+'< '+filename+'.alm1' +' >'+' '+filename+'.out1')
 
     
 
