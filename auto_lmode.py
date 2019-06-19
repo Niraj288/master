@@ -28,7 +28,7 @@ def get_log(filename):
             d[len(d)+1] = line.strip().split()[0]
         if 'Charge =' in line and at_ref == 0:
             at_ref = 1
-        if 'Optimized Parameters' in line or 'Input Parameters' in line:
+        if 'Optimized Parameters' in line or 'Initial Parameters' in line:
             index=ref
         ref+=1
     ref=0
