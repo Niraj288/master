@@ -88,6 +88,9 @@ def from_zmat(file):
     f.close()
 
     ids = int(lines[1].strip())
+    atoms = {}
+    for line in lines[2:]:
+        atoms[str(len(atoms)+1)] = line.strip().split()[0]
     count = 1
     st = ''
     for line in lines[2:]:
@@ -96,16 +99,16 @@ def from_zmat(file):
             pass
         elif len(k) < 5:
             # bond
-            st += str(count) + ' ' + k[1] + '\n'
+            st += str(count) + ' ' + k[1] + ' : '+ '-'.join(map(lambda x : atoms[x]+x, [str(count), k[1]])) + '\n'
         elif len(k) < 7:
             # bond and angle
-            st += str(count) + ' ' + k[1] + '\n'
-            st += str(count) + ' ' + k[1] + ' '+k[3] + '\n'
+            st += str(count) + ' ' + k[1] + ' : '+ '-'.join(map(lambda x : atoms[x]+x, [str(count), k[1]])) + '\n'
+            st += str(count) + ' ' + k[1] + ' '+k[3] + ' : '+ '-'.join(map(lambda x : atoms[x]+x, [str(count), k[1], k[3]])) + '\n'
         else:
             # bond, angle and dihedral
-            st += str(count) + ' ' + k[1] + '\n'
-            st += str(count) + ' ' + k[1] + ' '+k[3] + '\n'
-            st += str(count) + ' ' + k[1] + ' '+k[3] + ' '+ k[5] + '\n'
+            st += str(count) + ' ' + k[1] + ' : '+ '-'.join(map(lambda x : atoms[x]+x, [str(count), k[1]])) + '\n'
+            st += str(count) + ' ' + k[1] + ' '+k[3] + ' : '+ '-'.join(map(lambda x : atoms[x]+x, [str(count), k[1], k[3]])) + '\n'
+            st += str(count) + ' ' + k[1] + ' '+k[3] + ' '+ k[5] + ' : '+'-'.join(map(lambda x : atoms[x]+x, [str(count), k[1], k[3], k[5]])) + '\n'
         count += 1
     #print st
     return st
@@ -168,13 +171,13 @@ $qcdata
 $LocMod $End
 """
     lm_st=get_log(filename)
-    #s4 = from_zmat(filename+'.fchk')
-    s4=lm_st # to get parameters directly from gaussian output
+    s4 = from_zmat(filename+'.fchk')
+    #s4=lm_st # to get parameters directly from gaussian output
     #s4=get_lm_st(map(str,range(1,len(s)+1))) # get permutations of all atoms
 
     f.write(s1+s2+s3+s4)
     f.close()
-    os.system("lmode -b "+'< '+filename+'.alm1' +' >'+' '+filename+'.out1')
+    os.system("lmodes.exe -b "+'< '+filename+'.alm1' +' >'+' '+filename+'.out1')
 
     
 
