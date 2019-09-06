@@ -25,7 +25,11 @@ def xyz_(lines):
 				kl = lines[j].strip().split()
 				za.append(str(atd[kl[0]]))
 				amass.append(kl[-1])
-				xyz += kl[1:4]
+				x, y, z = kl[1:4]
+				x = str(1.88973*float(x))
+                		y = str(1.88973*float(y))
+                		z = str(1.88973*float(z))
+				xyz += [x,y,z]
 			break
 	for i in range (max(0, len(lines)-1000), len(lines)):
 		if 'Force constants in Cartesian coordinates.' in lines[i]:
