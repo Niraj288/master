@@ -12,12 +12,7 @@ def gaussian(path,string):
 	os.chdir(filename)
 	os.system("cp ../"+path+' ./')
 	os.system(" printf '"+string+"' | Multiwfn "+path)
-def gaussian2(path,string):
-	filename=path[:-4]
-        os.system('mkdir '+filename)
-        os.chdir(filename)
-        os.system("cp ../"+path+' ./')
-        os.system(" printf '"+string+"' | Multiwfn "+path+' > '+filename+'_nohup.out')
+	
 processes=[]
 for i in os.listdir('.'):
 	if i[-4:]==key:
